@@ -1,15 +1,15 @@
 #setting up variables
-print('Plug in Values Below. For Blank Spaces Enter 0')
-r1str = '200030040' #input("Enter first row of numbers: ")
-r2str = '030600007' #input("Enter second row of numbers: ")
-r3str = '009007108' #input("Enter third row of numbers: ")
-r4str = '004072000'# #input("Enter fourth row of numbers: ")
-r5str = '025081900' #input("Enter fifth row of numbers: ")
-r6str = '103006005' #input("Enter sixth row of numbers: ")
-r7str = '000020400' #input("Enter seventh row of numbers: ")
-r8str = '406800070'#input("Enter eigth row of numbers: ")
-r9str = '500900300' #input("Enter ninth row of numbers: ")
-arrStr = [r1str],[r2str],[r3str],[r4str],[r5str],[r6str],[r7str],[r8str],[r9str]
+r1str = 0
+r2str = 0
+r3str = 0
+r4str = 0
+r5str = 0
+r6str = 0
+r7str = 0
+r8str = 0
+r9str = 0
+r1str = 0
+
 arrBoard = [[0 for col in range(9)] for row in range(9)]
 box1 = [[0 for col in range(3)] for row in range(3)]
 box2 = [[0 for col in range(3)] for row in range(3)]   
@@ -21,8 +21,45 @@ box7 = [[0 for col in range(3)] for row in range(3)]
 box8 = [[0 for col in range(3)] for row in range(3)]
 box9 = [[0 for col in range(3)] for row in range(3)]
 arrPoss = [[[0] for col in range(9)] for row in range(9)]
+arrPossPrev = [[[0] for col in range(9)] for row in range(9)] #previous possibility arr: if same as previous time puzzle impossible
 arrTest = [1,2,3,4,5,6,7,8,9]
 repeat = True
+
+
+
+#get input string with 9 integers
+print('Plug in Values Below. For Blank Spaces Enter 0')
+while len(str(r1str)) != 9 or not r1str.isdigit():
+    r1str = input("Enter first row of numbers: ")
+while len(str(r2str)) != 9 or not r2str.isdigit():
+    r2str = input("Enter second row of numbers: ")
+while len(str(r3str)) != 9 or not r3str.isdigit():
+    r3str = input("Enter third row of numbers: ")
+while len(str(r4str)) != 9 or not r4str.isdigit():
+    r4str = input("Enter fourth row of numbers: ")
+while len(str(r5str)) != 9 or not r5str.isdigit():
+    r5str = input("Enter fifth row of numbers: ")
+while len(str(r6str)) != 9 or not r6str.isdigit():
+    r6str = input("Enter sixth row of numbers: ")
+while len(str(r7str)) != 9 or not r7str.isdigit():
+    r7str = input("Enter seventh row of numbers: ")
+while len(str(r8str)) != 9 or not r8str.isdigit():
+    r8str = input("Enter eigth row of numbers: ")
+while len(str(r9str)) != 9 or not r9str.isdigit():
+    r9str = input("Enter ninth row of numbers: ")
+r1str = str(r1str)
+r2str = str(r2str)
+r3str = str(r3str)
+r4str = str(r4str)
+r5str = str(r5str)
+r6str = str(r6str)
+r7str = str(r7str)
+r8str = str(r8str)
+r9str = str(r9str)
+
+
+#set up board array
+arrStr = [r1str],[r2str],[r3str],[r4str],[r5str],[r6str],[r7str],[r8str],[r9str]
 
 
 #making board
@@ -33,7 +70,7 @@ for i in range (0,9):
         arrBoard[i][j] = tempNum
 
 
-#making boxes
+#making 3x3 boxes of values
 for i in range (0,9):
     for j in range (0,9):
         if i < 3 and j <3:
@@ -56,7 +93,7 @@ for i in range (0,9):
             box9[j-6][i-6] = arrBoard[j][i]
 
 
-#Finding Possitbilities
+#Finding Possibilities
 def findPoss(arrP, arrB):
     arrP = [[[0] for col in range(9)] for row in range(9)]
     for i in range(0,9):
@@ -115,7 +152,7 @@ def findPoss(arrP, arrB):
     return arrP
 
 
-#Check for matches
+#Check for matches in values
 def plugVals(arrP, arrB):
     match = False
     for i in range(0,9):
@@ -131,7 +168,7 @@ def plugVals(arrP, arrB):
     return arrB
 
 
-#Check If Solved
+#Check If Array Fully Solved
 def checkSolved(arrB):
     for i in range(0,9):
         for j in range(0,9):
@@ -140,12 +177,13 @@ def checkSolved(arrB):
     return False
 
 
-#def solve(arrP, arrB, repeat):
+#def solve(arrP, arrB, repeat): if board not solved repeat the process
 while repeat == True:
     arrPoss = findPoss(arrPoss,arrBoard)
     arrBoard = plugVals(arrPoss, arrBoard)
     repeat = checkSolved(arrBoard)
 
 
-#print(solve(arrPoss,arrBoard,repeat))
-print(arrBoard)
+#print(solve(arrPoss,arrBoard,repeat)) 
+for i in range(0,9):
+    print(arrBoard[i])
